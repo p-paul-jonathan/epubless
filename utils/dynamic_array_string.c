@@ -115,8 +115,12 @@ struct DynamicArrayString dynamic_array_string_copy(struct DynamicArrayString ar
 }
 
 void dynamic_array_string_free(struct DynamicArrayString *arr) {
+  if (!arr) return;
+
+  for (int i = 0; i < arr->len; i++) { free(arr->array[i]); }
   free(arr->array);
   arr->array = NULL;
+
   arr->capacity = 0;
   arr->len = 0;
 }
