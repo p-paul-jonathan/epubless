@@ -12,7 +12,7 @@ struct DynamicArrayString split_string(char *string, char *delimiter) {
   char *token = strtok(dup, delimiter);
 
   while (token != NULL){
-    dynamic_array_string_push(&splits, token);
+    dynamic_array_string_push(&splits, strdup(token));
     token = strtok(NULL, delimiter);
   }
 

@@ -1,11 +1,12 @@
-#include "dirs.h"
-#include "constants.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "constants.h"
+#include "dynamic_array_string.h"
+#include "string_helpers.h"
 // -----------------------------------------------------------------------------
 // Helpers
 // -----------------------------------------------------------------------------
@@ -85,4 +86,28 @@ char *get_tmp_dir_for_book(const char *book_name) {
 }
 char *get_bookmarks_dir_for_book(const char *book_name) {
   return get_dir_for_book(BOOKMARKS_SUBPATH, book_name);
+}
+
+char *extract_filename(char *path) {
+  struct DynamicArrayString filename_arr = split_string(path, PATH_SEPARATOR);
+  char *filename_with_extension = strdup(dynamic_array_string_get_index(&filename_arr, -1));
+
+  dynamic_array_string_free(&filename_arr);
+  return filename_with_extension;
+}
+
+char *extract_filename_without_extenstion(char* path) {
+  char *filename_with_extension = extract_filename(path);
+  struct DynamicArrayString dot_split_arr = split_string(filename_with_extension, ".");
+
+  if (dot_split_arr.len > 1) {
+    dynamic_array_string_pop(&dot_split_arr);
+  }
+
+  char *filename = join_string(&dot_split_arr, ".");
+
+  free(filename_with_extension);
+  dynamic_array_string_free(&dot_split_arr);
+
+  return filename;
 }

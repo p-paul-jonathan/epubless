@@ -7,7 +7,7 @@ struct DynamicArrayString {
   int len;
 };
 
-static void dynamic_array_string_init(struct DynamicArrayString *arr) {
+void dynamic_array_string_init(struct DynamicArrayString *arr) {
   arr->capacity = 16;
   arr->len = 0;
   arr->array = (char **)malloc(arr->capacity * sizeof(char *));

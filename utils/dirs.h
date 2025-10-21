@@ -1,10 +1,6 @@
 #ifndef DIRS_H
 #define DIRS_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // Create base cache directories: ~/.cache/epubless/{books,tmp,bookmarks}
 int create_cache_structure(void);
 
@@ -21,8 +17,7 @@ char *get_books_dir_for_book(const char *book_name);
 char *get_tmp_dir_for_book(const char *book_name);
 char *get_bookmarks_dir_for_book(const char *book_name);
 
-#ifdef __cplusplus
-}
-#endif
+char *extract_filename(char *path);
+char *extract_filename_without_extenstion(char *path);
 
 #endif // DIRS_H
