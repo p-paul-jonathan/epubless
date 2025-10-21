@@ -51,7 +51,12 @@ static char *get_dir_for_book(const char *subdir, const char *book_name) {
 
 // Create base cache directories: books/, tmp/, bookmarks/
 int create_cache_structure(void) {
-  if (create_dir_if_missing(get_base_dir(BOOKS_SUBPATH)) ||
+  const char *home = getenv("HOME");
+  static char cache_dir_abs_path[PATH_MAX_LEN];
+  snprintf(cache_dir_abs_path, sizeof(cache_dir_abs_path), "%s/%s", home, CACHE_DIR_SUBPATH);
+
+  if (create_dir_if_missing(cache_dir_abs_path) ||
+      create_dir_if_missing(get_base_dir(BOOKS_SUBPATH)) ||
       create_dir_if_missing(get_base_dir(TMP_SUBPATH)) ||
       create_dir_if_missing(get_base_dir(BOOKMARKS_SUBPATH))) {
     return 1;

@@ -29,13 +29,13 @@ int main(int argc, char **argv) {
   }
 
   if (create_cache_structure() != 0) {
-    fprintf(stderr, "Failed to create cache for program: %s", argv[0]);
+    fprintf(stderr, "Failed to create cache for program: %s\n", argv[0]);
     return EXIT_FAILURE;
   }
 
   char *book_name = extract_filename_without_extenstion(argv[1]);
   if (create_cache_for_book(book_name) != 0) {
-    fprintf(stderr, "Failed to create cache for book: %s", book_name);
+    fprintf(stderr, "Failed to create cache for book: %s\n", book_name);
     return EXIT_FAILURE;
   }
   free(book_name);
