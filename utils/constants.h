@@ -11,4 +11,10 @@
 #define TMP_SUBPATH "tmp"
 #define BOOKMARKS_SUBPATH "bookmarks"
 
+#ifdef _WIN32
+  #define PATH_SEPARATOR "\\"
+#else
+  #define PATH_SEPARATOR "/"
+#endif
+
 #endif // CONSTANTS_H

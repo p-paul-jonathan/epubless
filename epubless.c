@@ -3,7 +3,10 @@
 #include <string.h>
 
 
+#include "utils/constants.h"
 #include "utils/dirs.h"
+#include "utils/dynamic_array_string.h"
+#include "utils/string_helpers.h"
 
 void print_help(const char *prog_name) {
   printf("epubless — a terminal EPUB reader\n\n");
@@ -19,25 +22,18 @@ void print_help(const char *prog_name) {
 }
 
 char* extract_filename(char* path) {
-    // Find the last occurrence of '/' or '\'
-    char* last_slash = strrchr(path, '/');
-    char* last_backslash = strrchr(path, '\\');
+  struct DynamicArrayString filename_arr = split_string(path, PATH_SEPARATOR);
+  char *filename_with_extension = dynamic_array_string_get_index(&filename_arr, -1);
 
-    // Determine which separator is the last one
-    char* separator = NULL;
-    if (last_slash > last_backslash) { // Handles cases where both exist, like "C:/folder\file.txt"
-        separator = last_slash;
-    } else {
-        separator = last_backslash;
-    }
+  struct DynamicArrayString dot_split_arr = split_string(filename_with_extension, ".");
+  dynamic_array_string_pop(&dot_split_arr);
 
-    // If no separator is found, the entire path is the filename
-    if (separator == NULL) {
-        return path;
-    } else {
-        // Return the substring after the last separator
-        return separator + 1;
-    }
+  char *filename = join_string(&dot_split_arr, ".");
+
+  dynamic_array_string_free(&filename_arr);
+  dynamic_array_string_free(&dot_split_arr);
+
+  return filename;
 }
 
 int main(int argc, char **argv) {
