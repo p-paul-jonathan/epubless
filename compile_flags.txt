@@ -1,0 +1,13 @@
+-std=c11
+-Wall
+-Wextra
+-D_POSIX_C_SOURCE=200809L
+-I./utils
+-I/opt/homebrew/include
+-I/opt/homebrew/include/minizip
+
+-I/usr/include
+-I/usr/include/minizip
+
+-I"C:/msys64/mingw64/include"
+-I"C:/msys64/mingw64/include/minizip"
