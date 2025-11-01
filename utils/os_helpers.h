@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <time.h>
 
 #ifdef _WIN32
   #include <direct.h>    // _mkdir, _rmdir
@@ -57,7 +58,7 @@
   #define ACCESS(path, mode) access(path, mode)
 
   static inline void sleep_ms(unsigned int ms) {
-    usleep(ms * 1000);
+    nanosleep((const struct timespec[]){{ms / 1000, (ms % 1000) * 1000000L}}, NULL);
   }
 
   static inline const char *get_home_dir(void) {
